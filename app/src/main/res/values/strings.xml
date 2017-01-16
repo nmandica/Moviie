@@ -9,4 +9,15 @@
     </string-array>
     <string name="title_activity_recent_movies">RecentMoviesActivity</string>
     <string name="movie_title">Films</string>
+    <string name="seen_icon">Seen icon</string>
+    <string name="retry">Réessayer</string>
+    <string name="image_movie">Movie image</string>
+    <string name="movie_star_image">Movie star image</string>
+    <string name="seen">Vu</string>
+    <string name="synopsis">Synopsis</string>
+    <string name="date">Date de sortie</string>
+    <string name="Famous">Populaires</string>
+    <string name="top_rated">Mieux notés</string>
+    <string name="upcoming">À venir</string>
+    <string name="movie_activity_title">Movie Activity</string>
 </resources>
