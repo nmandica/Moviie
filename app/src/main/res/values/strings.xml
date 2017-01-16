@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Moviie</string>
+    <string name="no_movies_added">Aucun film à afficher</string>
+
+    <string-array name="my_movies_spinner">
+        <item>Tous mes films</item>
+        <item>Films à voir</item>
+        <item>Films déjà vus</item>
+    </string-array>
+    <string name="title_activity_recent_movies">RecentMoviesActivity</string>
+    <string name="movie_title">Films</string>
 </resources>
