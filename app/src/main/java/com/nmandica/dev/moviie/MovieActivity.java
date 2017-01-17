@@ -31,7 +31,7 @@ public class MovieActivity extends AppCompatActivity
 {
     private static final String EXTRA_MOVIE = "extra_movie";
     private static final String ROOT_URL_IMAGE = "https://image.tmdb.org/t/p/w960_and_h540_bestv2";
-    private static final String TAG = "com.ensiie.moviie.RecentMoviesActivity";
+    private static final String TAG = "com.ensiie.moviie.MoviesListActivity";
 
     View.OnClickListener buttonClickListener = new View.OnClickListener()
     {

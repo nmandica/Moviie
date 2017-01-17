@@ -12,12 +12,12 @@ import android.support.v7.widget.Toolbar;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecentMoviesActivity extends AppCompatActivity {
+public class MoviesListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recent_movies);
+        setContentView(R.layout.activity_movies_list);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(R.string.movie_title);
@@ -25,10 +25,6 @@ public class RecentMoviesActivity extends AppCompatActivity {
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-
-        viewPagerAdapter.addFragment(RecentMoviesFragment.newInstance(0), getString(R.string.Famous));
-        viewPagerAdapter.addFragment(RecentMoviesFragment.newInstance(1), getString(R.string.top_rated));
-        viewPagerAdapter.addFragment(RecentMoviesFragment.newInstance(2), getString(R.string.upcoming));
         viewPager.setAdapter(viewPagerAdapter);
 
         final TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
@@ -37,36 +33,35 @@ public class RecentMoviesActivity extends AppCompatActivity {
 
     class ViewPagerAdapter extends FragmentPagerAdapter
     {
-        private final List<Fragment> fragmentList = new ArrayList();
-        private final List<String> fragmentTitleList = new ArrayList();
-
         ViewPagerAdapter(FragmentManager manager)
         {
             super(manager);
         }
 
-        void addFragment(Fragment fragment, String string)
-        {
-            this.fragmentList.add(fragment);
-            this.fragmentTitleList.add(string);
-        }
-
         @Override
         public int getCount()
         {
-            return this.fragmentList.size();
+            return 3;
         }
 
         @Override
         public Fragment getItem(int position)
         {
-            return this.fragmentList.get(position);
+            return MoviesListFragment.newInstance(position);
         }
 
         @Override
         public CharSequence getPageTitle(int position)
         {
-            return this.fragmentTitleList.get(position);
+            switch(position) {
+                case 0 :
+                    return getResources().getString(R.string.famous);
+                case 1 :
+                    return getResources().getString(R.string.top_rated);
+                default:
+                case 2 :
+                    return getResources().getString(R.string.upcoming);
+            }
         }
     }
 }

@@ -19,6 +19,7 @@
             android:layout_height="fill_parent"
             android:scaleType="centerCrop"
             android:contentDescription="@null" />
+
         <RelativeLayout
             android:layout_gravity="bottom"
             android:orientation="horizontal"

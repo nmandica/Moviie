@@ -41,12 +41,13 @@ class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHolder>
         Object localObject = holder.seen;
         if (movie.isSeen())
         {
-            ((ImageView)localObject).setVisibility(View.VISIBLE);
-            localObject = holder.holder;
-            if (!movie.isSeen()) {
-                ((ViewGroup)localObject).setVisibility(View.GONE);
-
-            }
+            holder.seen.setVisibility(View.VISIBLE);
+            holder.holder.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            holder.seen.setVisibility(View.GONE);
+            holder.holder.setVisibility(View.GONE);
         }
     }
 

@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Intent intent = new Intent(MainActivity.this, RecentMoviesActivity.class);
+                final Intent intent = new Intent(MainActivity.this, MoviesListActivity.class);
                 startActivity(intent);
             }
         });
