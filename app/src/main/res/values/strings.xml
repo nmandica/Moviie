@@ -21,4 +21,10 @@
     <string name="upcoming">À venir</string>
     <string name="movie_activity_title">Movie Activity</string>
     <string name="about">A propos</string>
+    <string name="share_seen">Faut absolument que tu regardes %s !</string>
+    <string name="share_not_seen">Ça te dit de regarder %s ?</string>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="logo">Logo</string>
+    <string name="tmdb_about">This product uses the TMDb API but is not endorsed or certified by TMDb.</string>
+    <string name="signature">Développé par Nicolas Mandica.</string>
 </resources>

@@ -134,28 +134,33 @@ public class MovieActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem paramMenuItem) {
-//        String str;
-//        if (paramMenuItem.getItemId() == 2131558574) {
-//            if (this.checkBoxSeen.isChecked())
-//            {
-//                str = String.format(getString(2131165243), new Object[] { this.movie.getTitle() });
-//                Intent localIntent = new Intent("android.intent.action.SEND");
-//                localIntent.putExtra("android.intent.extra.TEXT", str);
-//                localIntent.setType("text/plain");
-//                startActivity(localIntent);
-//            }
-//        }
-//        for (;;)
-//        {
-//            return super.onOptionsItemSelected(paramMenuItem);
-//            str = String.format(getString(2131165242), new Object[] { this.movie.getTitle() });
-//            break;
-//            if (paramMenuItem.getItemId() == 2131558573) {
-//                startActivity(new Intent(this, AboutActivity.class));
-//            }
-//        }
-        return false;
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == R.id.action_about) {
+            Intent aboutIntent = new Intent(getApplicationContext(), AboutActivity.class);
+            startActivity(aboutIntent);
+        }
+        else if(id == R.id.action_share) {
+            String sharedText;
+
+            if (this.checkBoxSeen.isChecked())
+            {
+                sharedText = String.format(getString(R.string.share_seen), this.movie.getTitle());
+            }
+            else
+            {
+                sharedText = String.format(getString(R.string.share_not_seen), this.movie.getTitle());
+            }
+
+            Intent sendIntent = new Intent();
+            sendIntent.setAction(Intent.ACTION_SEND);
+            sendIntent.putExtra(Intent.EXTRA_TEXT, sharedText);
+            sendIntent.setType("text/plain");
+            startActivity(sendIntent);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
