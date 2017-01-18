@@ -101,7 +101,7 @@
                 <TextView
                     android:textSize="16.0sp"
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorBoldText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/synopsis" />
@@ -115,7 +115,7 @@
                 <TextView
                     android:textSize="16.0sp"
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/colorBoldText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8.0dp"

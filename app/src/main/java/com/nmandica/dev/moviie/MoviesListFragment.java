@@ -33,7 +33,7 @@ import okhttp3.Response;
 public class MoviesListFragment extends Fragment implements Callback
 {
     private static final int ERROR = 0;
-    private static final String EXTRA_MOVIES_TYPE = "extra_movies_type";
+    private static final String EXTRA_MOVIES_TAB = "extra_movies_tab";
     public static final int MOVIES_FAMOUS = 0;
     public static final int MOVIES_TOP_RATED = 1;
     public static final int MOVIES_UPCOMING = 2;
@@ -117,7 +117,7 @@ public class MoviesListFragment extends Fragment implements Callback
     public static MoviesListFragment newInstance(int tab)
     {
         final Bundle bundle = new Bundle();
-        bundle.putInt(EXTRA_MOVIES_TYPE, tab);
+        bundle.putInt(EXTRA_MOVIES_TAB, tab);
 
         final MoviesListFragment fragment = new MoviesListFragment();
         fragment.setArguments(bundle);
@@ -155,7 +155,7 @@ public class MoviesListFragment extends Fragment implements Callback
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        this.moviesTab = getArguments().getInt(EXTRA_MOVIES_TYPE);
+        this.moviesTab = getArguments().getInt(EXTRA_MOVIES_TAB);
 
         if (moviesTab == MOVIES_FAMOUS) {
             singleton.setFamous(movies);

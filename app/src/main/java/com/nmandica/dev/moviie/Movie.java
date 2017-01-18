@@ -22,7 +22,7 @@ public class Movie extends RealmObject implements Serializable
     private String releaseDate;
     private String posterPath;
     private String backdropPath;
-    private RealmList<RealmString> genres;
+    //private RealmList<RealmString> genres;
     private String homepage;
     private int runtime;
     private boolean seen;
@@ -43,7 +43,7 @@ public class Movie extends RealmObject implements Serializable
         this.backdropPath = backdropPath;
     }
 
-    public Movie(int id, String title, String overview, String voteAverage, String releaseDate, String posterPath, String backdropPath, RealmList<RealmString> genres, String homePage, int runTime)
+    public Movie(int id, String title, String overview, String voteAverage, String releaseDate, String posterPath, String backdropPath, String homePage, int runTime)
     {
         this.id = id;
         this.title = title;
@@ -52,7 +52,6 @@ public class Movie extends RealmObject implements Serializable
         this.releaseDate = releaseDate;
         this.posterPath = posterPath;
         this.backdropPath = backdropPath;
-        this.genres = genres;
         this.homepage = homePage;
         this.runtime = runTime;
     }
@@ -77,11 +76,6 @@ public class Movie extends RealmObject implements Serializable
     public int getBudget()
     {
         return 2131165223;
-    }
-
-    public RealmList<RealmString> getGenres()
-    {
-        return this.genres;
     }
 
     public String getHomepage()
@@ -132,11 +126,6 @@ public class Movie extends RealmObject implements Serializable
     public void setBackdropPath(String backdropPath)
     {
         this.backdropPath = backdropPath;
-    }
-
-    public void setGenres(RealmList<RealmString> genres)
-    {
-        this.genres = genres;
     }
 
     public void setHomepage(String homepage)

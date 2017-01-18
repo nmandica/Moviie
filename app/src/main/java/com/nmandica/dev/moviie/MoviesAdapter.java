@@ -38,7 +38,6 @@ class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHolder>
         final Movie movie = this.movies.get(position);
         Picasso.with(holder.poster.getContext()).load(ROOT_URL_IMAGE + movie.getPosterPath()).into(holder.poster);
 
-        Object localObject = holder.seen;
         if (movie.isSeen())
         {
             holder.seen.setVisibility(View.VISIBLE);
