@@ -127,24 +127,22 @@ public class MoviesListFragment extends Fragment implements Callback
 
     private ArrayList<Movie> parserResponse(Response paramResponse) throws IOException, JSONException
     {
-        ArrayList localArrayList = new ArrayList();
+        ArrayList moviesList = new ArrayList();
 
         JSONArray json = new JSONObject(paramResponse.body().string()).getJSONArray("results");
 
-        int i = 0;
-        while (i < json.length())
+        for (int i = 0; i < json.length(); i++)
         {
             JSONObject localJSONObject = json.getJSONObject(i);
-            int j = localJSONObject.getInt("id");
-            String str1 = localJSONObject.getString("title");
-            String str2 = localJSONObject.getString("poster_path");
-            String str3 = localJSONObject.getString("backdrop_path");
-            String str4 = localJSONObject.getString("release_date");
-            localArrayList.add(new Movie(j, str1, localJSONObject.getString("overview"), localJSONObject.getDouble("vote_average") + "", str4, str2, str3));
-            i += 1;
+            int id = localJSONObject.getInt("id");
+            String title = localJSONObject.getString("title");
+            String posterPath = localJSONObject.getString("poster_path");
+            String backdropPath = localJSONObject.getString("backdrop_path");
+            String releaseDate = localJSONObject.getString("release_date");
+            moviesList.add(new Movie(id, title, localJSONObject.getString("overview"), localJSONObject.getDouble("vote_average") + "", releaseDate, posterPath, backdropPath));
         }
 
-        return localArrayList;
+        return moviesList;
     }
 
     private void showError()

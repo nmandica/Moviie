@@ -3,60 +3,70 @@ package com.nmandica.dev.moviie;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by nico on 16/01/2017.
  */
 
-public class Movie implements Serializable
+public class Movie extends RealmObject implements Serializable
 {
     private static final String TAG = "com.nmandica.moviie.Movie";
-    private String backdropPath;
-    private ArrayList<String> genres;
-    private String homepage;
+    @PrimaryKey
     private int id;
+    private String title;
     private String overview;
-    private String posterPath;
+    private String voteAverage;
     private String releaseDate;
+    private String posterPath;
+    private String backdropPath;
+    private RealmList<RealmString> genres;
+    private String homepage;
     private int runtime;
     private boolean seen;
-    private String title;
-    private String voteAverage;
 
-    public Movie(int paramInt, String paramString1, String paramString2, String paramString3, String paramString4, String paramString5, String paramString6)
+    public Movie()
     {
-        this.id = paramInt;
-        this.title = paramString1;
-        this.overview = paramString2;
-        this.voteAverage = paramString3;
-        this.releaseDate = paramString4;
-        this.posterPath = paramString5;
-        this.backdropPath = paramString6;
+
     }
 
-    public Movie(int paramInt1, String paramString1, String paramString2, String paramString3, String paramString4, String paramString5, String paramString6, ArrayList<String> paramArrayList, String paramString7, int paramInt2)
+    public Movie(int id, String title, String overview, String voteAverage, String releaseDate, String posterPath, String backdropPath)
     {
-        this.id = paramInt1;
-        this.title = paramString1;
-        this.overview = paramString2;
-        this.voteAverage = paramString3;
-        this.releaseDate = paramString4;
-        this.posterPath = paramString5;
-        this.backdropPath = paramString6;
-        this.genres = paramArrayList;
-        this.homepage = paramString7;
-        this.runtime = paramInt2;
+        this.id = id;
+        this.title = title;
+        this.overview = overview;
+        this.voteAverage = voteAverage;
+        this.releaseDate = releaseDate;
+        this.posterPath = posterPath;
+        this.backdropPath = backdropPath;
     }
 
-    public Movie(int paramInt, String paramString1, String paramString2, String paramString3, String paramString4, String paramString5, String paramString6, boolean paramBoolean)
+    public Movie(int id, String title, String overview, String voteAverage, String releaseDate, String posterPath, String backdropPath, RealmList<RealmString> genres, String homePage, int runTime)
     {
-        this.id = paramInt;
-        this.title = paramString1;
-        this.overview = paramString2;
-        this.voteAverage = paramString3;
-        this.releaseDate = paramString4;
-        this.posterPath = paramString5;
-        this.backdropPath = paramString6;
-        this.seen = paramBoolean;
+        this.id = id;
+        this.title = title;
+        this.overview = overview;
+        this.voteAverage = voteAverage;
+        this.releaseDate = releaseDate;
+        this.posterPath = posterPath;
+        this.backdropPath = backdropPath;
+        this.genres = genres;
+        this.homepage = homePage;
+        this.runtime = runTime;
+    }
+
+    public Movie(int id, String title, String overview, String voteAverage, String releaseDate, String posterPath, String backdropPath, boolean seen)
+    {
+        this.id = id;
+        this.title = title;
+        this.overview = overview;
+        this.voteAverage = voteAverage;
+        this.releaseDate = releaseDate;
+        this.posterPath = posterPath;
+        this.backdropPath = backdropPath;
+        this.seen = seen;
     }
 
     public String getBackdropPath()
@@ -69,7 +79,7 @@ public class Movie implements Serializable
         return 2131165223;
     }
 
-    public ArrayList<String> getGenres()
+    public RealmList<RealmString> getGenres()
     {
         return this.genres;
     }
@@ -119,19 +129,19 @@ public class Movie implements Serializable
         return this.seen;
     }
 
-    public void setBackdropPath(String paramString)
+    public void setBackdropPath(String backdropPath)
     {
-        this.backdropPath = paramString;
+        this.backdropPath = backdropPath;
     }
 
-    public void setGenres(ArrayList<String> paramArrayList)
+    public void setGenres(RealmList<RealmString> genres)
     {
-        this.genres = paramArrayList;
+        this.genres = genres;
     }
 
-    public void setHomepage(String paramString)
+    public void setHomepage(String homepage)
     {
-        this.homepage = paramString;
+        this.homepage = homepage;
     }
 
     public void setId(int paramInt)
@@ -139,38 +149,38 @@ public class Movie implements Serializable
         this.id = paramInt;
     }
 
-    public void setOverview(String paramString)
+    public void setOverview(String overview)
     {
-        this.overview = paramString;
+        this.overview = overview;
     }
 
-    public void setPosterPath(String paramString)
+    public void setPosterPath(String posterPath)
     {
-        this.posterPath = paramString;
+        this.posterPath = posterPath;
     }
 
-    public void setReleaseDate(String paramString)
+    public void setReleaseDate(String releaseDate)
     {
-        this.releaseDate = paramString;
+        this.releaseDate = releaseDate;
     }
 
-    public void setRuntime(int paramInt)
+    public void setRuntime(int runtime)
     {
-        this.runtime = paramInt;
+        this.runtime = runtime;
     }
 
-    public void setSeen(boolean paramBoolean)
+    public void setSeen(boolean seen)
     {
-        this.seen = paramBoolean;
+        this.seen = seen;
     }
 
-    public void setTitle(String paramString)
+    public void setTitle(String title)
     {
-        this.title = paramString;
+        this.title = title;
     }
 
-    public void setVoteAverage(String paramString)
+    public void setVoteAverage(String voteAverage)
     {
-        this.voteAverage = paramString;
+        this.voteAverage = voteAverage;
     }
 }
