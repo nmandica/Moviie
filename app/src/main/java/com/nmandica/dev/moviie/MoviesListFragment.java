@@ -40,8 +40,10 @@ public class MoviesListFragment extends Fragment implements Callback
     private static final int SUCCESS = 1;
     private static final String TAG = "MoviesListActivity";
     private Button button;
-    private ArrayList<Movie> movies;
+    GridLayoutManager gridLayoutManager;
+    private ArrayList<Movie> movies = new ArrayList<>();
     private int moviesTab;
+    private int pageNumber = 1;
 
     private Handler handler = new Handler()
     {
@@ -54,7 +56,7 @@ public class MoviesListFragment extends Fragment implements Callback
                     showError();
                     break;
                 case SUCCESS:
-                    movies = (ArrayList)msg.obj;
+                    movies.addAll((ArrayList)msg.obj);
                     fillList();
                     break;
             }
@@ -77,26 +79,68 @@ public class MoviesListFragment extends Fragment implements Callback
         {
             button.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
-            callWebservice();
+            callWebservice(pageNumber);
         }
     };
+
+//    RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
+//        @Override
+//        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//            super.onScrolled(recyclerView, dx, dy);
+//
+//            if(dy > 0) //check for scroll down
+//            {
+//                int visibleItemCount = gridLayoutManager.getChildCount();
+//                int totalItemCount = gridLayoutManager.getItemCount();
+//                int pastVisibleItems = gridLayoutManager.findFirstVisibleItemPosition();
+//
+//                if (isLoading)
+//                {
+//                    if ( (visibleItemCount + pastVisibleItems) >= totalItemCount)
+//                    {
+//                        isLoading = false;
+//                        //Do pagination.. i.e. fetch new data
+//                        Log.v("...", "Last Item Wow ! page = " + pageNumber);
+//                        pageNumber++;
+//                        callWebservice(pageNumber);
+//                    }
+//                }
+//            }
+//
+//            // init
+//            RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+//            RecyclerView.Adapter adapter = recyclerView.getAdapter();
+//
+//            if (layoutManager.getChildCount() > 0) {
+//                // Calculate
+//                int indexOfLastItemViewVisible = layoutManager.getChildCount() -1;
+//                View lastItemViewVisible = layoutManager.getChildAt(indexOfLastItemViewVisible);
+//                int adapterPosition = layoutManager.getPosition(lastItemViewVisible);
+//                boolean isLastItemVisible = (adapterPosition == adapter.getItemCount() -1);
+//
+//                // check
+//                if (isLastItemVisible && isLoading)
+//                    onLastItemVisible(); // callback
+//            }
+//        }
+//    };
 
     private ProgressBar progressBar;
     private RecyclerView recyclerView;
     private Singleton singleton = Singleton.getInstance();
 
-    private void callWebservice()
+    private void callWebservice(int pageNumber)
     {
         String url;
 
         if (this.moviesTab == MOVIES_FAMOUS) {
-            url = "https://api.themoviedb.org/3/discover/movie?api_key=3c0f130197ce35297d7e7465ceb36da7&language=fr-FR&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&primary_release_year=2016";
+            url = "https://api.themoviedb.org/3/discover/movie?api_key=3c0f130197ce35297d7e7465ceb36da7&language=fr-FR&sort_by=popularity.desc&include_adult=false&include_video=false&primary_release_year=2016&page=" + pageNumber;
         }
         else if (this.moviesTab == MOVIES_TOP_RATED) {
-            url = "https://api.themoviedb.org/3/movie/top_rated?api_key=3c0f130197ce35297d7e7465ceb36da7&language=fr-FR&page=1";
+            url = "https://api.themoviedb.org/3/movie/top_rated?api_key=3c0f130197ce35297d7e7465ceb36da7&language=fr-FR&page=" + pageNumber;
         }
         else {
-            url = "https://api.themoviedb.org/3/movie/upcoming?api_key=3c0f130197ce35297d7e7465ceb36da7&language=fr-FR&page=1&region=FR";
+            url = "https://api.themoviedb.org/3/movie/upcoming?api_key=3c0f130197ce35297d7e7465ceb36da7&language=fr-FR&region=FR&page=" + pageNumber;
         }
 
         Request request = new Request.Builder().url(url).build();
@@ -108,10 +152,16 @@ public class MoviesListFragment extends Fragment implements Callback
         this.button.setVisibility(View.GONE);
         this.progressBar.setVisibility(View.GONE);
 
-        final MoviesAdapter moviesAdapter = new MoviesAdapter(this.movies);
-        moviesAdapter.setListener(this.movieClickListener);
-
-        this.recyclerView.setAdapter(moviesAdapter);
+        if (this.recyclerView.getAdapter() == null)
+        {
+            final MoviesAdapter moviesAdapter = new MoviesAdapter(this.movies);
+            moviesAdapter.setListener(this.movieClickListener);
+            this.recyclerView.setAdapter(moviesAdapter);
+        }
+        else
+        {
+            this.recyclerView.getAdapter().notifyDataSetChanged();
+        }
     }
 
     public static MoviesListFragment newInstance(int tab)
@@ -174,11 +224,23 @@ public class MoviesListFragment extends Fragment implements Callback
     {
         final View view = inflater.inflate(R.layout.movies_list_fragment, container, false);
 
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        gridLayoutManager = new GridLayoutManager(getContext(), 2);
+
+        EndlessRecyclerViewScrollListener scrollListener = new EndlessRecyclerViewScrollListener(gridLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                pageNumber = page + 1;
+                Log.v("...", "Last Item Wow ! page = " + pageNumber);
+                callWebservice(pageNumber);
+            }
+        };
 
         this.recyclerView = ((RecyclerView)view.findViewById(R.id.recycler_view));
         this.recyclerView.setHasFixedSize(true);
         this.recyclerView.setLayoutManager(gridLayoutManager);
+        this.recyclerView.addOnScrollListener(scrollListener);
 
         this.button = ((Button)view.findViewById(R.id.button));
         this.button.setOnClickListener(this.onClickListener);
@@ -202,7 +264,7 @@ public class MoviesListFragment extends Fragment implements Callback
             this.movies = ((ArrayList)savedInstanceState.getSerializable("movies"));
         }
 
-        callWebservice();
+        callWebservice(pageNumber);
 
         return view;
     }

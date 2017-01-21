@@ -152,7 +152,11 @@ public class MainActivity extends AppCompatActivity {
                     result = realm.where(Movie.class).equalTo("seen", true).findAll();
             }
 
-            return (ArrayList<Movie>) realm.copyFromRealm(result);
+            ArrayList<Movie> myMovies = (ArrayList<Movie>) realm.copyFromRealm(result);
+
+            realm.close();
+
+            return myMovies;
         }
 
         @Override
