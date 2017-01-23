@@ -61,9 +61,9 @@ public class MainActivity extends AppCompatActivity {
         return getPreferences(MODE_PRIVATE).getInt(SELECTED_TAB, 0);
     }
 
-    private void setSelectedTab(int paramInt)
+    private void setSelectedTab(int selectedTab)
     {
-        getPreferences(MODE_PRIVATE).edit().putInt(SELECTED_TAB, paramInt).apply();
+        getPreferences(MODE_PRIVATE).edit().putInt(SELECTED_TAB, selectedTab).apply();
     }
 
 

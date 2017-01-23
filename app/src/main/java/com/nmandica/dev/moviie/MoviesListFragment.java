@@ -45,6 +45,9 @@ public class MoviesListFragment extends Fragment implements Callback
     private int moviesTab;
     private int pageNumber = 1;
 
+    /**
+     * Handle the response message
+     */
     private Handler handler = new Handler()
     {
         @Override
@@ -63,6 +66,9 @@ public class MoviesListFragment extends Fragment implements Callback
         }
     };
 
+    /**
+     * Open the Movie activity when a movie poster is clicked
+     */
     MoviesAdapter.MovieClickListener movieClickListener = new MoviesAdapter.MovieClickListener()
     {
         @Override
@@ -72,10 +78,13 @@ public class MoviesListFragment extends Fragment implements Callback
         }
     };
 
+    /**
+     * Click listener to reload the data
+     */
     View.OnClickListener onClickListener = new View.OnClickListener()
     {
         @Override
-        public void onClick(View paramAnonymousView)
+        public void onClick(View view)
         {
             button.setVisibility(View.GONE);
             progressBar.setVisibility(View.VISIBLE);
@@ -83,52 +92,14 @@ public class MoviesListFragment extends Fragment implements Callback
         }
     };
 
-//    RecyclerView.OnScrollListener scrollListener = new RecyclerView.OnScrollListener() {
-//        @Override
-//        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//            super.onScrolled(recyclerView, dx, dy);
-//
-//            if(dy > 0) //check for scroll down
-//            {
-//                int visibleItemCount = gridLayoutManager.getChildCount();
-//                int totalItemCount = gridLayoutManager.getItemCount();
-//                int pastVisibleItems = gridLayoutManager.findFirstVisibleItemPosition();
-//
-//                if (isLoading)
-//                {
-//                    if ( (visibleItemCount + pastVisibleItems) >= totalItemCount)
-//                    {
-//                        isLoading = false;
-//                        //Do pagination.. i.e. fetch new data
-//                        Log.v("...", "Last Item Wow ! page = " + pageNumber);
-//                        pageNumber++;
-//                        callWebservice(pageNumber);
-//                    }
-//                }
-//            }
-//
-//            // init
-//            RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-//            RecyclerView.Adapter adapter = recyclerView.getAdapter();
-//
-//            if (layoutManager.getChildCount() > 0) {
-//                // Calculate
-//                int indexOfLastItemViewVisible = layoutManager.getChildCount() -1;
-//                View lastItemViewVisible = layoutManager.getChildAt(indexOfLastItemViewVisible);
-//                int adapterPosition = layoutManager.getPosition(lastItemViewVisible);
-//                boolean isLastItemVisible = (adapterPosition == adapter.getItemCount() -1);
-//
-//                // check
-//                if (isLastItemVisible && isLoading)
-//                    onLastItemVisible(); // callback
-//            }
-//        }
-//    };
-
     private ProgressBar progressBar;
     private RecyclerView recyclerView;
     private Singleton singleton = Singleton.getInstance();
 
+    /**
+     * Get the movies from TMDB according to the selected tab and the actual page
+     * @param pageNumber Actual page number
+     */
     private void callWebservice(int pageNumber)
     {
         String url;
@@ -147,6 +118,9 @@ public class MoviesListFragment extends Fragment implements Callback
         Webservice.getOkHttpClient().newCall(request).enqueue(this);
     }
 
+    /**
+     * Set or update the adapter with the new movies list
+     */
     private void fillList()
     {
         this.button.setVisibility(View.GONE);
@@ -164,6 +138,11 @@ public class MoviesListFragment extends Fragment implements Callback
         }
     }
 
+    /**
+     * Get a new instance of MoviesListFragment
+     * @param tab Tab number of the instance
+     * @return The new MoviesListFragment
+     */
     public static MoviesListFragment newInstance(int tab)
     {
         final Bundle bundle = new Bundle();
@@ -175,11 +154,18 @@ public class MoviesListFragment extends Fragment implements Callback
         return fragment;
     }
 
-    private ArrayList<Movie> parserResponse(Response paramResponse) throws IOException, JSONException
+    /**
+     * Parse the TMDB JSON response
+     * @param response The response
+     * @return The movies list obtained from the response
+     * @throws IOException
+     * @throws JSONException
+     */
+    private ArrayList<Movie> parseResponse(Response response) throws IOException, JSONException
     {
-        ArrayList moviesList = new ArrayList();
+        ArrayList<Movie> moviesList = new ArrayList<>();
 
-        JSONArray json = new JSONObject(paramResponse.body().string()).getJSONArray("results");
+        JSONArray json = new JSONObject(response.body().string()).getJSONArray("results");
 
         for (int i = 0; i < json.length(); i++)
         {
@@ -195,12 +181,19 @@ public class MoviesListFragment extends Fragment implements Callback
         return moviesList;
     }
 
+    /**
+     * On error show the retry button
+     */
     private void showError()
     {
         this.button.setVisibility(View.VISIBLE);
         this.progressBar.setVisibility(View.GONE);
     }
 
+    /**
+     * Get the saved active tab
+     * @param savedInstanceState Saved instance state containing the last tab number
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState)
     {
@@ -230,9 +223,8 @@ public class MoviesListFragment extends Fragment implements Callback
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 // Triggered only when new data needs to be appended to the list
-                // Add whatever code is needed to append new items to the bottom of the list
+                // Append new items to the bottom of the list
                 pageNumber = page + 1;
-                Log.v("...", "Last Item Wow ! page = " + pageNumber);
                 callWebservice(pageNumber);
             }
         };
@@ -247,6 +239,7 @@ public class MoviesListFragment extends Fragment implements Callback
 
         this.progressBar = ((ProgressBar)view.findViewById(R.id.progress_bar));
 
+        //Get the saved state tab
         if ((savedInstanceState == null) || (savedInstanceState.getSerializable("movies") == null))
         {
             if ((this.moviesTab == MOVIES_FAMOUS) && (this.singleton.getFamousMovies() != null)) {
@@ -261,7 +254,7 @@ public class MoviesListFragment extends Fragment implements Callback
         }
         else
         {
-            this.movies = ((ArrayList)savedInstanceState.getSerializable("movies"));
+            this.movies = ((ArrayList<Movie>)savedInstanceState.getSerializable("movies"));
         }
 
         callWebservice(pageNumber);
@@ -284,7 +277,7 @@ public class MoviesListFragment extends Fragment implements Callback
 
         try
         {
-            ArrayList<Movie> movies = parserResponse(response);
+            ArrayList<Movie> movies = parseResponse(response);
             Message message = Message.obtain();
             message.what = SUCCESS;
             message.obj = movies;
@@ -301,6 +294,7 @@ public class MoviesListFragment extends Fragment implements Callback
     public void onSaveInstanceState(Bundle outState)
     {
         super.onSaveInstanceState(outState);
+
         if (this.movies != null) {
             outState.putSerializable("movies", this.movies);
         }

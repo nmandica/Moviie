@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 
 class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHolder>
 {
-    private static final String ROOT_URL_IMAGE = "https://image.tmdb.org/t/p/w300/";
+    private static final String ROOT_POSTER_URL = "https://image.tmdb.org/t/p/w300/";
     private MovieClickListener listener;
     private ArrayList<Movie> movies;
 
@@ -36,7 +35,7 @@ class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHolder>
     public void onBindViewHolder(MyViewHolder holder, int position)
     {
         final Movie movie = this.movies.get(position);
-        Picasso.with(holder.poster.getContext()).load(ROOT_URL_IMAGE + movie.getPosterPath()).into(holder.poster);
+        Picasso.with(holder.poster.getContext()).load(ROOT_POSTER_URL + movie.getPosterPath()).into(holder.poster);
 
         if (movie.isSeen())
         {
@@ -82,7 +81,7 @@ class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHolder>
             view.setOnClickListener(new View.OnClickListener()
             {
                 @Override
-                public void onClick(View paramAnonymousView)
+                public void onClick(View view)
                 {
                     listener.onMovieClickListener(movies.get(getAdapterPosition()));
                 }

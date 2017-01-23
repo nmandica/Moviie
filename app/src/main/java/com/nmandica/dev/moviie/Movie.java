@@ -13,7 +13,6 @@ import io.realm.annotations.PrimaryKey;
 
 public class Movie extends RealmObject implements Serializable
 {
-    private static final String TAG = "com.nmandica.moviie.Movie";
     @PrimaryKey
     private int id;
     private String title;
@@ -73,11 +72,6 @@ public class Movie extends RealmObject implements Serializable
         return this.backdropPath;
     }
 
-    public int getBudget()
-    {
-        return 2131165223;
-    }
-
     public String getHomepage()
     {
         return this.homepage;
@@ -133,9 +127,9 @@ public class Movie extends RealmObject implements Serializable
         this.homepage = homepage;
     }
 
-    public void setId(int paramInt)
+    public void setId(int id)
     {
-        this.id = paramInt;
+        this.id = id;
     }
 
     public void setOverview(String overview)

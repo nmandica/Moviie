@@ -5,6 +5,10 @@ import io.realm.RealmObject;
 /**
  * Created by nico on 18/01/2017.
  */
+
+/**
+ * Realm string to be used in RealmList
+ */
 public class RealmString extends RealmObject {
     private String val;
 

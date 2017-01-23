@@ -9,7 +9,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
  * Created by nico on 16/01/2017.
  */
 
-public class Webservice {
+class Webservice {
     private static final String TAG = "Webservice";
     private static final OkHttpClient client;
 
@@ -30,7 +30,7 @@ public class Webservice {
         client = clientBuilder.build();
     }
 
-    public static OkHttpClient getOkHttpClient() {
+    static OkHttpClient getOkHttpClient() {
         return client;
     }
 }

@@ -9,7 +9,6 @@ import java.util.ArrayList;
 class Singleton
 {
     private static Singleton INSTANCE = new Singleton();
-    private static final String TAG = "com.nmandica.moviie.Singleton";
     private ArrayList<Movie> famous;
     private ArrayList<Movie> topRated;
     private ArrayList<Movie> upComing;

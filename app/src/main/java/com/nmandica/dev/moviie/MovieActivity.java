@@ -13,7 +13,6 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -32,7 +31,6 @@ import io.realm.RealmResults;
 public class MovieActivity extends AppCompatActivity {
     private static final String EXTRA_MOVIE = "extra_movie";
     private static final String ROOT_URL_IMAGE = "https://image.tmdb.org/t/p/w960_and_h540_bestv2";
-    private static final String TAG = "com.ensiie.moviie.MoviesListActivity";
 
     View.OnClickListener buttonClickListener = new View.OnClickListener() {
         @Override
@@ -61,7 +59,6 @@ public class MovieActivity extends AppCompatActivity {
     private ImageView image;
     private Movie movie;
     private TextView overview;
-    private ProgressBar progressBar;
     private TextView rating;
 
     /**
@@ -107,7 +104,6 @@ public class MovieActivity extends AppCompatActivity {
         this.image = ((ImageView) findViewById(R.id.image));
         this.fab = ((FloatingActionButton) findViewById(R.id.actionButton));
         this.checkBoxSeen = ((CheckBox) findViewById(R.id.seenCheckBox));
-        this.progressBar = ((ProgressBar) findViewById(R.id.progress_bar));
         this.collapsingToolbar = ((CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar));
 
         Toolbar toolbar = ((Toolbar) findViewById(R.id.toolbar));
