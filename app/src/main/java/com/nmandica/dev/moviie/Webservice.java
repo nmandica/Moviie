@@ -16,7 +16,7 @@ class Webservice {
     static {
         OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
 
-        // Ajout de log
+        // Add log
         HttpLoggingInterceptor logger = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
