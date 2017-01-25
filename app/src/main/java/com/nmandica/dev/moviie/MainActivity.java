@@ -34,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
     private Spinner spinner;
     private TextView textView;
 
+    /**
+     * Open the Movie activity when a movie poster is clicked
+     */
     MoviesAdapter.MovieClickListener movieClickListener = new MoviesAdapter.MovieClickListener()
     {
         @Override
@@ -44,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * On spinner item selection changed, save the new spinner tab number and get the related saved movies
+     */
     private AdapterView.OnItemSelectedListener spinnerListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -56,11 +62,19 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * Get the spinner tab number from the preferences
+     * @return Saved spinner tab number
+     */
     private int getSelectedTab()
     {
         return getPreferences(MODE_PRIVATE).getInt(SELECTED_TAB, 0);
     }
 
+    /**
+     * Save the selected spinner tab to the preferences
+     * @param selectedTab Selected spinner tab number
+     */
     private void setSelectedTab(int selectedTab)
     {
         getPreferences(MODE_PRIVATE).edit().putInt(SELECTED_TAB, selectedTab).apply();
@@ -123,6 +137,9 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Get the previous state on resume (automatically get the last tab in the spinner)
+     */
     @Override
     protected void onResume()
     {
@@ -132,6 +149,9 @@ public class MainActivity extends AppCompatActivity {
         new GetMyMoviesTask().execute(getSelectedTab());
     }
 
+    /**
+     * Async task to get the movies saved in the realm database
+     */
     private class GetMyMoviesTask extends AsyncTask<Integer, Void, ArrayList<Movie>> {
         @Override
         protected ArrayList<Movie> doInBackground(Integer... tab) {
@@ -159,6 +179,9 @@ public class MainActivity extends AppCompatActivity {
             return myMovies;
         }
 
+        /**
+         * Show the progress bar before execution
+         */
         @Override
         protected void onPreExecute()
         {
@@ -167,6 +190,10 @@ public class MainActivity extends AppCompatActivity {
             textView.setVisibility(View.GONE);
         }
 
+        /**
+         * If there is no movie, show the message. If there are movies, show the list
+         * @param movies Movies list
+         */
         @Override
         protected void onPostExecute(ArrayList<Movie> movies) {
             progressBar.setVisibility(View.GONE);

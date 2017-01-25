@@ -21,10 +21,8 @@ public class Movie extends RealmObject implements Serializable
     private String releaseDate;
     private String posterPath;
     private String backdropPath;
-    //private RealmList<RealmString> genres;
-    private String homepage;
-    private int runtime;
     private boolean seen;
+    //private RealmList<RealmString> genres;
 
     public Movie()
     {
@@ -42,39 +40,9 @@ public class Movie extends RealmObject implements Serializable
         this.backdropPath = backdropPath;
     }
 
-    public Movie(int id, String title, String overview, String voteAverage, String releaseDate, String posterPath, String backdropPath, String homePage, int runTime)
-    {
-        this.id = id;
-        this.title = title;
-        this.overview = overview;
-        this.voteAverage = voteAverage;
-        this.releaseDate = releaseDate;
-        this.posterPath = posterPath;
-        this.backdropPath = backdropPath;
-        this.homepage = homePage;
-        this.runtime = runTime;
-    }
-
-    public Movie(int id, String title, String overview, String voteAverage, String releaseDate, String posterPath, String backdropPath, boolean seen)
-    {
-        this.id = id;
-        this.title = title;
-        this.overview = overview;
-        this.voteAverage = voteAverage;
-        this.releaseDate = releaseDate;
-        this.posterPath = posterPath;
-        this.backdropPath = backdropPath;
-        this.seen = seen;
-    }
-
     public String getBackdropPath()
     {
         return this.backdropPath;
-    }
-
-    public String getHomepage()
-    {
-        return this.homepage;
     }
 
     public int getId()
@@ -97,11 +65,6 @@ public class Movie extends RealmObject implements Serializable
         return this.releaseDate;
     }
 
-    public int getRuntime()
-    {
-        return this.runtime;
-    }
-
     public String getTitle()
     {
         return this.title;
@@ -122,11 +85,6 @@ public class Movie extends RealmObject implements Serializable
         this.backdropPath = backdropPath;
     }
 
-    public void setHomepage(String homepage)
-    {
-        this.homepage = homepage;
-    }
-
     public void setId(int id)
     {
         this.id = id;
@@ -145,11 +103,6 @@ public class Movie extends RealmObject implements Serializable
     public void setReleaseDate(String releaseDate)
     {
         this.releaseDate = releaseDate;
-    }
-
-    public void setRuntime(int runtime)
-    {
-        this.runtime = runtime;
     }
 
     public void setSeen(boolean seen)

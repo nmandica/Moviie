@@ -32,6 +32,9 @@ public class MovieActivity extends AppCompatActivity {
     private static final String EXTRA_MOVIE = "extra_movie";
     private static final String ROOT_URL_IMAGE = "https://image.tmdb.org/t/p/w960_and_h540_bestv2";
 
+    /**
+     * Add or remove the movie to/from the database, depending on its actual status
+     */
     View.OnClickListener buttonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -43,6 +46,9 @@ public class MovieActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * Change the isSeen bool of the film on checked change
+     */
     CompoundButton.OnCheckedChangeListener checkBoxListener = new CompoundButton.OnCheckedChangeListener() {
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -84,6 +90,12 @@ public class MovieActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Get a new intent for the given movie
+     * @param context Context
+     * @param movie Movie to use for the new intent
+     * @return The new intent
+     */
     public static Intent newIntent(Context context, Movie movie) {
         Intent intent = new Intent(context, MovieActivity.class);
         intent.putExtra(EXTRA_MOVIE, movie);
@@ -130,6 +142,11 @@ public class MovieActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Share and about menu item selection
+     * @param item MenuItem
+     * @return Boolean
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -166,6 +183,10 @@ public class MovieActivity extends AppCompatActivity {
         outState.putSerializable("movie", this.movie);
     }
 
+    /**
+     * Add movie to the realm database
+     * @param movie Movie to add to the database
+     */
     public void addMovieToSee(final Movie movie) {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
@@ -182,6 +203,10 @@ public class MovieActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Remove movie from realm database
+     * @param movie Movie to remove from database
+     */
     public void deleteMovieToSee(final Movie movie) {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
@@ -199,6 +224,10 @@ public class MovieActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Update the seen status of a movie in the database
+     * @param movie Movie to use as a reference to update the database
+     */
     public void updateMovieToSee(final Movie movie) {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
@@ -215,6 +244,10 @@ public class MovieActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Try to get the movie from the database and set the activity consequently
+     * @param movie Movie to try to find in the database
+     */
     public void getMovieFromDataBase(final Movie movie) {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override

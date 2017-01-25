@@ -37,15 +37,16 @@ class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHolder>
         final Movie movie = this.movies.get(position);
         Picasso.with(holder.poster.getContext()).load(ROOT_POSTER_URL + movie.getPosterPath()).into(holder.poster);
 
+        //If the movie has been seen, show the bottom seen icon
         if (movie.isSeen())
         {
             holder.seen.setVisibility(View.VISIBLE);
-            holder.holder.setVisibility(View.VISIBLE);
+            holder.seenBackground.setVisibility(View.VISIBLE);
         }
         else
         {
             holder.seen.setVisibility(View.GONE);
-            holder.holder.setVisibility(View.GONE);
+            holder.seenBackground.setVisibility(View.GONE);
         }
     }
 
@@ -68,7 +69,7 @@ class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHolder>
 
     class MyViewHolder extends RecyclerView.ViewHolder
     {
-        ViewGroup holder;
+        ViewGroup seenBackground;
         ImageView poster;
         ImageView seen;
 
@@ -77,7 +78,7 @@ class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHolder>
             super(view);
             this.poster = ((ImageView)view.findViewById(R.id.poster));
             this.seen = ((ImageView)view.findViewById(R.id.seen));
-            this.holder = ((ViewGroup)view.findViewById(R.id.subtitle_holder));
+            this.seenBackground = ((ViewGroup)view.findViewById(R.id.seen_background));
             view.setOnClickListener(new View.OnClickListener()
             {
                 @Override
