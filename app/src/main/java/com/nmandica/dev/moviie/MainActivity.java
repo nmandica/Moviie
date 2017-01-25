@@ -145,8 +145,12 @@ public class MainActivity extends AppCompatActivity {
     {
         super.onResume();
         this.spinner.setSelection(getSelectedTab());
+    }
 
-        new GetMyMoviesTask().execute(getSelectedTab());
+    @Override
+    public void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
     }
 
     /**
